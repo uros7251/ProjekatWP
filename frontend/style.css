@@ -1,0 +1,181 @@
+body {
+    background-image: url(./images/Harriets-Rooftop-&-Lounge.jpg);
+    background-color: rgb(22, 24, 26);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 200px;
+    min-height: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white
+}
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+header h1 {
+    font-size: 60px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#mainSection {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    width: 90%;
+}
+div.TableLayout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+div.LoungeRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    flex-basis: 100px;
+}
+div.TableSquare {
+    background-color: rgb(120, 55, 20);
+    background-color: rgba(77, 23, 8, 0.65);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    margin: 10px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: x-large;
+}
+div.TableSquare:hover {
+    background-color: rgba(192, 98, 10, 0.9);
+    
+}
+div.TableUIWrapper {
+    width: 100%;
+}
+div.BoardnCommands {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+div.TableBoard {
+    display: flex;
+    flex-grow: 4;
+    margin: 5px;
+    justify-content: center;
+}
+div.TableCommands {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex-grow: 1;
+    
+}
+div.OrderSelector {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+}
+div.Picker {
+    margin: 10px;
+    border: 5px solid  rgb(22, 24, 26, 0.7);
+    background-color: rgba(8, 92, 92, 0.3);
+    color: white;
+    border-radius: 10px;
+    align-items: center;
+    font-weight: 500;
+    font-size: larger;
+}
+div.Menus {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+div.MenuView {
+    margin: 5px;
+    flex-grow: 4;
+}
+div.NewMenuDiv {
+    margin: 5px;
+    flex-grow: 1;
+    background-color:  rgba(192, 98, 10, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div.NewMenuDiv:hover {
+    background-color:  rgba(192, 98, 10, 0.6);
+}
+h3.MenuHeading {
+    color: rgb(22, 24, 26);
+}
+h2.TableHeading {
+    margin-right: 1%;
+    margin-left: 1%;
+    border-radius: 10px;
+    background-color: rgba(22, 24, 26,0.7);
+    text-align: center;
+}
+.redStolova {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+}
+table, tr, th, td {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+table.MenuList {
+    border-top: 5px solid rgb(22, 24, 26, 0.7);
+    background-color: rgba(77, 23, 8, 0.5);
+    background-color: rgba(8, 92, 92, 0.5);
+    width: 90%;
+}
+table.ordersTable {
+    border: 5px solid rgb(22, 24, 26, 0.7);;
+    border-radius: 10px;
+    width: 90%;
+    align-self: center;
+}
+table.ordersTable tr {
+    background-color: rgba(8, 92, 92, 0.3);
+}
+table.ordersTable tr.finalRow {
+    background-color: rgba(255,51,0,0.6);
+    background-color: rgba(77, 23, 8, 0.65);
+    color: white;
+    text-align: right;
+    font-weight: 600;
+}
+button {
+    margin: 0.5%;
+}
+button.RemoveMenuButton {
+    opacity: 50%;
+    background-color:white;
+    color: rgb(8, 92, 92);
+}
+button.RemoveMenuButton:hover {
+    opacity: 100%;
+    font-weight: bold;
+}
+
+footer {
+    color: white;
+    text-align: center;
+}
