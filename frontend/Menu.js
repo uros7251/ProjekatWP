@@ -2,13 +2,22 @@ import {MenuEntry} from './MenuEntry.js';
 import { MenuUI } from './MenuUI.js';
 
 export class Menu {
-    constructor(name) {
+    constructor(id, name) {
+        this.id = id;
         this.name = name;
         this.content = [];
+        this.lounge = null;
         this.menuUI = null;
     }
-    addMenuEntry(name, price) {
-        const newEntry = new MenuEntry(name, price)
+    setLounge(lounge) {
+        this.lounge = lounge;
+    }
+    updateName(newName) {
+        this.name = newName;
+        this.lounge.updateMenuView(this.id);
+    }
+    addMenuEntry(id, name, price) {
+        const newEntry = new MenuEntry(id, name, price)
         this.content.push(newEntry);
         
         if (this.menuUI !== null) {
@@ -17,16 +26,17 @@ export class Menu {
 
         return newEntry;
     }
-    removeEntryByName(name) {
-        const index = this.content.findIndex(el => el.name === name);
+    removeEntryByID(id) {
+        // poziv ka serveru, ceka se potvrda uspesnosti
+        const index = this.content.findIndex(el => el.id === id);
         this.content.splice(index, 1);
         
         if (this.menuUI !== null) {
             this.menuUI.removeItem(index);
         }
     }
-    getEntryByName(name) {
-        return this.content.find(el => el.name === name);
+    getEntryByID(id) {
+        return this.content.find(el => el.id === id);
     }
     getMenuUI() {
         if (this.menuUI === null) {

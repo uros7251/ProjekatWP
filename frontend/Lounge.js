@@ -16,21 +16,31 @@ export class Lounge {
             this.tables.push(new Table(++i));
         }
     }
+    menuNameValid(name) {
+        if (name === null) {
+            return false;
+        }
+        else if (this.menus.some(menu => menu.name === name)) {
+            return false;
+        }
+        return true;
+    }
     addMenu(...menu) {
         menu.forEach(elem => {
             this.menus.push(elem);
+            elem.setLounge(this);
             if (this.view !== null) {
                 this.view.addMenu(elem);
             }
         });
     }
-    removeMenu(menuName) {
-        const index = this.menus.findIndex(elem => elem.name === menuName);
+    removeMenu(menuID) {
+        const index = this.menus.findIndex(elem => elem.id === menuID);
         this.menus.splice(index, 1);
         this.view.removeMenu(index);
     }
-    getMenu(menuName) {
-        return this.menus.find(elem => elem.name === menuName);
+    getMenu(menuID) {
+        return this.menus.find(elem => elem.id === menuID);
     }
     drawLoungeView(parent) {
         this.view = new LoungeView(this);
@@ -38,5 +48,9 @@ export class Lounge {
             this.view.appendTo(parent);
         }
         return this.view;
+    }
+    updateMenuView(menuID) {
+        const index = this.menus.findIndex(menu => menu.id = menuID);
+        this.view.updateMenuName(index, this.menus[index].name);
     }
 }

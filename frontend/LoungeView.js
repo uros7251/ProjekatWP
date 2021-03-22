@@ -25,7 +25,7 @@ export class LoungeView {
                 table.classList.add("TableSquare");
                 table.innerHTML = "Table " + localCount;
                 table.onclick = ev => {
-                    this.tableUI.setWorkingTable(this.lounge.tables[localCount-1]);
+                    this.tableUI.setWorkingTable(this.lounge.tables[localCount - 1]);
                 }
                 row.appendChild(table);
             }
@@ -35,9 +35,23 @@ export class LoungeView {
         this.newMenuDiv.classList.add("NewMenuDiv");
         this.newMenuDiv.innerHTML = "Click for a new menu";
         this.newMenuDiv.onclick = ev => {
-            const name = prompt("How would you like to call a new menu?");
-            if (name !== null) {
-                this.lounge.addMenu(new Menu(name));
+            const menuName = prompt("How would you like to call a new menu?");
+            if (this.lounge.menuNameValid(menuName)) {
+                // poziv ka serveru, kreiranje menija u bazi, server vraca ID koji se koristi za upis
+                fetch("https://localhost:5001/Lounge/CreateMenu/" + menuName, {
+                    method: "POST"
+                }).then(p => {
+                    if (p.ok) {
+                        p.json().then(data => {
+                            this.lounge.addMenu(new Menu(data.id, menuName));
+                        })
+                    }
+                    else if (p.status == 400) {
+                        p.json().then(data => {
+                            alert("Server Error: " + data.error);
+                        })
+                    }
+                })
             }
         }
         this.lounge.menus.forEach(elem => {
@@ -45,24 +59,29 @@ export class LoungeView {
             removeButton.innerHTML = "Delete menu";
             removeButton.classList.add("RemoveMenuButton");
             removeButton.onclick = ev => {
-                this.lounge.removeMenu(elem.name);
+                // zahtev ka serveru
+                this.onRemoveMenuCommand(elem);
             }
             const div = elem.getMenuUI().itemList;
             div.appendChild(removeButton);
             this.menuView.appendChild(div);
         });
     }
+
     addMenu(menu) {
         const removeButton = document.createElement("button");
         removeButton.innerHTML = "Delete menu";
         removeButton.classList.add("RemoveMenuButton");
         removeButton.onclick = ev => {
-            this.lounge.removeMenu(menu.name);
+            this.onRemoveMenuCommand(menu);
         }
         const div = menu.getMenuUI().itemList;
         div.appendChild(removeButton);
         this.menuView.appendChild(div);
         this.tableUI.addMenu(menu);
+    }
+    updateMenuName(index, newName) {
+        this.tableUI.updateMenuName(index, newName);
     }
     removeMenu(index) {
         this.menuView.removeChild(this.menuView.childNodes[index]);
@@ -74,5 +93,22 @@ export class LoungeView {
         parent.appendChild(document.createElement("hr"));
         parent.appendChild(this.menuView);
         parent.appendChild(this.newMenuDiv);
+    }
+    onRemoveMenuCommand(menu) {
+        fetch("https://localhost:5001/Lounge/DeleteMenu/" + menu.id, {
+            method: "DELETE"
+        }).then(response => {
+            if (response.ok) {
+                this.lounge.removeMenu(menu.id);
+            }
+            else if (response.status == 400) {
+                response.json().then(data => {
+                    alert("Server Error: " + data.error);
+                });
+            }
+            else {
+                alert("Server Error: Deletion failed");
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 export class MenuEntry {
-    constructor(name, price){
+    constructor(id, name, price){
+        this.id = id;
         this.name = name;
         this.price = price;
         this.description = null;

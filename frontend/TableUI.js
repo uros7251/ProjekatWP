@@ -37,7 +37,16 @@ export class TableUI {
         const payButton = document.createElement("button");
         payButton.innerHTML = "Pay";
         payButton.onclick = ev => {
-            this.table.pay();
+            fetch("https://localhost:5001/Lounge/RegisterPayment/" + this.table.moneyToPay(), {
+                method: "POST"
+            }).then(response => {
+                if (response.ok) {
+                    this.table.pay();
+                }
+                else {
+                    alert("Server Error: Payment unsuccesful");
+                }
+            })
         };
         div12.appendChild(payButton);
         const freeButton = document.createElement("button");
@@ -89,7 +98,9 @@ export class TableUI {
         submitButton.onclick = ev => {
             if (this.table !== null) {
                 const itemPicker = div22.querySelector(".ItemPicker");
-                this.table.placeAnOrder(this.lounge.getMenu(menuPicker.value), itemPicker.value, parseInt(countPicker.value));
+                this.table.placeAnOrder(this.lounge.getMenu(parseInt(menuPicker.value)),
+                                        parseInt(itemPicker.value),
+                                        parseInt(countPicker.value));
             }
             else {
                 alert("You must choose a table first.");
@@ -110,12 +121,16 @@ export class TableUI {
     }
     addMenu(menu) {
         const menuOption = document.createElement("option");
-        menuOption.value = menu.name;
+        menuOption.value = menu.id;
         menuOption.innerHTML = menu.name;
         this.divWrapper.querySelector(".MenuPicker").appendChild(menuOption);
         if (this.lounge.menus.length === 1) {
             this.changeActiveMenu();
         }
+    }
+    updateMenuName(index, newName) {
+        const menuSelector = this.divWrapper.querySelector(".MenuPicker");
+        menuSelector.childNodes[index].innerHTML = newName;
     }
     removeMenu(index) {
         const menuSelector = this.divWrapper.querySelector(".MenuPicker");
@@ -124,7 +139,7 @@ export class TableUI {
     }
     changeActiveMenu() {
         const menuPicker = this.divWrapper.querySelector(".MenuPicker");
-        const menu = this.lounge.getMenu(menuPicker.value);
+        const menu = this.lounge.getMenu(parseInt(menuPicker.value));
         if (menu === undefined) {
             const itemPicker = document.createElement("select");
             itemPicker.classList.add("ItemPicker");

@@ -18,11 +18,11 @@ export class Table {
         }
         return this.board.rootElement;
     }
-    placeAnOrder(menu, name, count = 1) {
+    placeAnOrder(menu, entryID, count = 1) {
         if (this.occupied === false) {
             this.occupied = true;
         }
-        const menuEntry = menu.getEntryByName(name);
+        const menuEntry = menu.getEntryByID(entryID);
         if (menuEntry === undefined) {
             return null;
         }
@@ -55,6 +55,7 @@ export class Table {
         return this.totalCost() - this.paid;
     }
     pay() {
+        // poziv ka serveru, upis placanja u bazu
         this.paid = this.totalCost();
         this.board.updateTotals();
     }
