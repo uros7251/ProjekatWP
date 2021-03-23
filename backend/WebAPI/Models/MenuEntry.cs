@@ -14,6 +14,7 @@ namespace WebAPI.Models
         public float Price { get; set; }
 
         public int MenuId { get; set; }
+        
         [JsonIgnore]
         public Menu Menu { get; set; }
     }

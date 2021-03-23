@@ -68,12 +68,14 @@ export class MenuUI {
                 },
                 body: JSON.stringify({
                     name: inputName.value,
-                    price: parseInt(inputPrice.value)
+                    price: parseFloat(inputPrice.value)
                 })
             }).then(p => {
                 if (p.ok) {
                     p.json().then(data => {
                         this.menu.addMenuEntry(parseInt(data.entryID), inputName.value, parseFloat(inputPrice.value));
+                        inputName.value = "";
+                        inputPrice.value = "";
                     });
                 }
                 else if (p.status === 400) {
@@ -87,8 +89,6 @@ export class MenuUI {
                 }
             });
             // zahtev serveru za kreiranje novog entry-a
-            inputName.value = "";
-            inputPrice.value = "";
         }
         newEntry.appendChild(buttonNew);
 
